@@ -1,0 +1,25 @@
+#header{margin-top:20px}#page-container{margin-bottom:20px}#url-rewriting-warning{display:none}
+
+#divClasse {
+	margin: 10px 0 0 12px;
+	display: inline-block;
+    height: 40px;
+    width: 200px;
+    font-size: 14px;
+	
+}
+
+#divMatiere {
+
+	margin: 10px 0 0 12px;
+	display: inline-block;
+    height: 40px;
+    width: 250px;
+}
+
+#divOptions {
+	position : absolute;
+   	display: inline-block;
+   	right : 825px;
+   	top:165px;
+}
