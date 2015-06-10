@@ -512,7 +512,6 @@
 
 			//<---------------------------------------------------Partie Classe-------------------------------------------------------------->
 
-			//on récup
 			//On récupère la désignation des classes rattachées à l'établissement.
 			//$classeTemp = $this->Fourniture->query("SELECT DISTINCT ClasseId, Fin FROM bal_vue_e300_produit WHERE EtablissementId=".$_SESSION['Association']['EtablissementId']);
 			$classe = $this->Fourniture->query("SELECT DISTINCT bal_vue_e300_produit.ClasseId, bal_vue_e201_classe.ClasseDesignation, bal_vue_e300_produit.Fin 
@@ -609,23 +608,43 @@
 
 			if($data['classe'] == '' && $data['matiere'] == '' && $data['options'] == null){
 			
-				$queryProducts = $this->Fourniture->query("SELECT DISTINCT Designation, Auteur, MarqueOuEditeur, AnneeParution, CodeBarre 
+				$queryProducts = $this->Fourniture->query(
+					"SELECT DISTINCT bal_vue_e300_produit.Designation, bal_vue_e300_produit.Auteur, bal_vue_e300_produit.MarqueOuEditeur, 
+					bal_vue_e300_produit.AnneeParution, bal_produit.TypeDeProduitNom, bal_vue_e300_produit.CodeBarre
 					FROM bal_vue_e300_produit
-					WHERE bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'");
+					INNER JOIN bal_produit ON bal_vue_e300_produit.CodeBarre = bal_produit.CodeBarre
+					WHERE bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'
+				");
+
 				$this->set('queryProducts',$queryProducts);
 			}
 			//Le cas où l'utilisateur à entré seulement la classe pour trier les produits
 			else if($data['classe'] != '' && $data['matiere'] == '' && $data['options'] == null){
-				$queryProducts = $this->Fourniture->query("SELECT Designation, Auteur, MarqueOuEditeur, AnneeParution, CodeBarre 
-					FROM bal_vue_e300_produit WHERE bal_vue_e300_produit.ClasseId = '".$data['classe']."'
-					AND bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'");
+				
+				$queryProducts = $this->Fourniture->query(
+					"SELECT DISTINCT bal_vue_e300_produit.Designation, bal_vue_e300_produit.Auteur, bal_vue_e300_produit.MarqueOuEditeur, 
+					bal_vue_e300_produit.AnneeParution, bal_produit.TypeDeProduitNom, bal_vue_e300_produit.CodeBarre
+					FROM bal_vue_e300_produit
+					INNER JOIN bal_produit ON bal_vue_e300_produit.CodeBarre = bal_produit.CodeBarre
+					WHERE bal_vue_e300_produit.ClasseId = '".$data['classe']."'
+					AND bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'
+				");
+
+
 				$this->set('queryProducts', $queryProducts);
 			}
 			//Le cas où l'utilisateur à entré seulement la matière pour tier les produits.
 			else if($data['classe'] == '' && $data['matiere'] != '' && $data['options'] == null){
-				$queryProducts = $this->Fourniture->query("SELECT Designation, Auteur, MarqueOuEditeur, AnneeParution, CodeBarre 
-					FROM bal_vue_e300_produit WHERE bal_vue_e300_produit.CoursNom = '".$data['matiere']."'
-					AND bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'");
+				
+				$queryProducts = $this->Fourniture->query(
+					"SELECT DISTINCT bal_vue_e300_produit.Designation, bal_vue_e300_produit.Auteur, bal_vue_e300_produit.MarqueOuEditeur, 
+					bal_vue_e300_produit.AnneeParution, bal_produit.TypeDeProduitNom, bal_vue_e300_produit.CodeBarre
+					FROM bal_vue_e300_produit
+					INNER JOIN bal_produit ON bal_vue_e300_produit.CodeBarre = bal_produit.CodeBarre
+					WHERE bal_vue_e300_produit.CoursNom = '".$data['matiere']."'
+					AND bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'
+				");
+				
 				$this->set('queryProducts', $queryProducts);
 			}
 			//Le cas où l'utilisateur n'a rentré que l'option pour trier
@@ -638,9 +657,14 @@
 					$i=0;
 
 					//$queryProductsTemp calcul les renseignements du livre pour l'option donné.
-					$queryProductsTemp = $this->Fourniture->query("SELECT Designation, Auteur, MarqueOuEditeur, AnneeParution, CodeBarre 
-						FROM bal_vue_e300_produit WHERE bal_vue_e300_produit.OptionNom = '".$value."'
-						AND bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'");
+					$queryProductsTemp = $this->Fourniture->query(
+						"SELECT DISTINCT bal_vue_e300_produit.Designation, bal_vue_e300_produit.Auteur, bal_vue_e300_produit.MarqueOuEditeur, 
+						bal_vue_e300_produit.AnneeParution, bal_produit.TypeDeProduitNom, bal_vue_e300_produit.CodeBarre
+						FROM bal_vue_e300_produit
+						INNER JOIN bal_produit ON bal_vue_e300_produit.CodeBarre = bal_produit.CodeBarre
+						WHERE bal_vue_e300_produit.OptionNom = '".$value."'
+						AND bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'
+					");
 
 					/*$queryProdutcsTemp est un : tableau indexé à partir de 0 qui contient un autre tableau dont chaque index s'appelle 
 					'bal_vue_e300_produit' et qui lui-même un tableau contenant les informations (désignation, auteur, etc...)
@@ -658,13 +682,14 @@
 							)
 						)
 					)*/
+					
 
-					//On veut donc mettre ses informations sous une forme plus simple pour lire dans la vue liste_produits.ctp
-
+					//On veut donc stocker les informtions calculer pour une une option pour envoyer à la vue liste_produits.ctp
 					if(!empty($queryProductsTemp)){//Si des produits on été trouvés
 						foreach($queryProductsTemp as $key=>$value){
-			
-							$queryProductsOptions[$i] = $value['bal_vue_e300_produit'];
+							
+							//array_merge permet de fusionner deux tableaux.
+							$queryProductsOptions[$i] = array_merge($value['bal_vue_e300_produit'], $value['bal_produit']);
 							++$i;
 						}
 
@@ -685,8 +710,7 @@
 						'CodeBarre' => '978-2-04-732277-2'
 					)
 				)
-				
-				On a en fait supprimé un tableau ce qui rend plus facile la lecture.*/
+				*/
 
 
 				//Les options ont été trouvées, alors on envoie directement $queryProductsOptions à la vue.
@@ -696,10 +720,15 @@
 			}
 			//Cas où l'utilisateur a rentré la classe et la matière.
 			else if($data['classe'] != '' && $data['matiere'] != '' && $data['options'] == null){
-				$queryProducts = $this->Fourniture->query("SELECT Designation, Auteur, MarqueOuEditeur, AnneeParution, CodeBarre
+				
+				$queryProducts = $this->Fourniture->query(
+					"SELECT DISTINCT bal_vue_e300_produit.Designation, bal_vue_e300_produit.Auteur, bal_vue_e300_produit.MarqueOuEditeur, 
+					bal_vue_e300_produit.AnneeParution, bal_produit.TypeDeProduitNom, bal_vue_e300_produit.CodeBarre
 					FROM bal_vue_e300_produit
+					INNER JOIN bal_produit ON bal_vue_e300_produit.CodeBarre = bal_produit.CodeBarre
 					WHERE bal_vue_e300_produit.ClasseId = '".$data['classe']."' AND bal_vue_e300_produit.CoursNom = '".$data['matiere']."' 
-					AND bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'");
+					AND bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'
+				");
 
 				$this->set('queryProducts', $queryProducts);
 			}
@@ -710,16 +739,22 @@
 					$i=0;
 
 					//$queryProductsTemp calcul les renseignements du livre pour l'option donné.
-					$queryProductsTemp = $this->Fourniture->query("SELECT Designation, Auteur, MarqueOuEditeur, AnneeParution, CodeBarre 
-						FROM bal_vue_e300_produit WHERE bal_vue_e300_produit.OptionNom = '".$value."'
+					$queryProductsTemp = $this->Fourniture->query(
+						"SELECT DISTINCT bal_vue_e300_produit.Designation, bal_vue_e300_produit.Auteur, bal_vue_e300_produit.MarqueOuEditeur, 
+						bal_vue_e300_produit.AnneeParution, bal_produit.TypeDeProduitNom, bal_vue_e300_produit.CodeBarre
+						FROM bal_vue_e300_produit
+						INNER JOIN bal_produit ON bal_vue_e300_produit.CodeBarre = bal_produit.CodeBarre
+						WHERE bal_vue_e300_produit.OptionNom = '".$value."'
 						AND bal_vue_e300_produit.ClasseId = '".$data['classe']."'
-						AND bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'");
+						AND bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'
+					");
 				}
 
 				if(!empty($queryProductsTemp)){//Si des produits on été trouvés
 					foreach($queryProductsTemp as $key=>$value){
-		
-						$queryProductsOptions[$i] = $value['bal_vue_e300_produit'];
+						
+						//array_merge permet de fusionner deux tableaux.
+						$queryProductsOptions[$i] = array_merge($value['bal_vue_e300_produit'], $value['bal_produit']);
 						++$i;
 					}
 
@@ -735,16 +770,22 @@
 					$i=0;
 
 					//$queryProductsTemp calcul les renseignements du livre pour l'option donné.
-					$queryProductsTemp = $this->Fourniture->query("SELECT Designation, Auteur, MarqueOuEditeur, AnneeParution, CodeBarre 
-						FROM bal_vue_e300_produit WHERE bal_vue_e300_produit.OptionNom = '".$value."'
+					$queryProductsTemp = $this->Fourniture->query(
+						"SELECT DISTINCT bal_vue_e300_produit.Designation, bal_vue_e300_produit.Auteur, bal_vue_e300_produit.MarqueOuEditeur, 
+						bal_vue_e300_produit.AnneeParution, bal_produit.TypeDeProduitNom, bal_vue_e300_produit.CodeBarre
+						FROM bal_vue_e300_produit
+						INNER JOIN bal_produit ON bal_vue_e300_produit.CodeBarre = bal_produit.CodeBarre
+						WHERE bal_vue_e300_produit.OptionNom = '".$value."'
 						AND bal_vue_e300_produit.CoursNom = '".$data['matiere']."'
-						AND bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'");
+						AND bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'
+					");
 				}
 
 				if(!empty($queryProductsTemp)){//Si des produits on été trouvés
 					foreach($queryProductsTemp as $key=>$value){
-		
-						$queryProductsOptions[$i] = $value['bal_vue_e300_produit'];
+						
+						//array_merge permet de fusionner deux tableaux.
+						$queryProductsOptions[$i] = array_merge($value['bal_vue_e300_produit'], $value['bal_produit']);
 						++$i;
 					}
 
@@ -760,17 +801,23 @@
 					$i=0;
 
 					//$queryProductsTemp calcul les renseignements du livre pour l'option donné.
-					$queryProductsTemp = $this->Fourniture->query("SELECT Designation, Auteur, MarqueOuEditeur, AnneeParution, CodeBarre 
-						FROM bal_vue_e300_produit WHERE bal_vue_e300_produit.OptionNom = '".$value."'
+					$queryProductsTemp = $this->Fourniture->query(
+						"SELECT DISTINCT bal_vue_e300_produit.Designation, bal_vue_e300_produit.Auteur, bal_vue_e300_produit.MarqueOuEditeur, 
+						bal_vue_e300_produit.AnneeParution, bal_produit.TypeDeProduitNom, bal_vue_e300_produit.CodeBarre
+						FROM bal_vue_e300_produit
+						INNER JOIN bal_produit ON bal_vue_e300_produit.CodeBarre = bal_produit.CodeBarre
+						WHERE bal_vue_e300_produit.OptionNom = '".$value."'
 						AND bal_vue_e300_produit.ClasseId = '".$data['classe']."'
 						AND bal_vue_e300_produit.CoursNom = '".$data['matiere']."'
-						AND bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'");
+						AND bal_vue_e300_produit.EtablissementId = '".$_SESSION['Association']['EtablissementId']."'
+					");
 				}
 
 				if(!empty($queryProductsTemp)){//Si des produits on été trouvés
 					foreach($queryProductsTemp as $key=>$value){
-		
-						$queryProductsOptions[$i] = $value['bal_vue_e300_produit'];
+						
+						//array_merge permet de fusionner deux tableaux.
+						$queryProductsOptions[$i] = array_merge($value['bal_vue_e300_produit'], $value['bal_produit']);
 						++$i;
 					}
 
@@ -879,6 +926,10 @@
 			}
 		}
 
+		public function editerProduit(){
+			if($this->request->is('post'))
+				$this->set('data', $this->request->data);
+		}
 	}
 
  ?>

@@ -10319,3 +10319,113 @@ Request URL: /Assoc-master/sources/Assoc-master/sources/fcpe.bmp
 Stack Trace:
 #0 /var/www/html/Assoc-master/sources/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
 #1 {main}
+2015-06-09 16:21:45 Error: [MissingControllerException] Controller class Assoc-masterController could not be found.
+Exception Attributes: array (
+  'class' => 'Assoc-masterController',
+  'plugin' => NULL,
+)
+Request URL: /Assoc-master/sources/Assoc-master/sources/fcpe.bmp
+Stack Trace:
+#0 /var/www/html/Assoc-master/sources/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2015-06-09 16:21:45 Error: [MissingControllerException] Controller class Assoc-masterController could not be found.
+Exception Attributes: array (
+  'class' => 'Assoc-masterController',
+  'plugin' => NULL,
+)
+Request URL: /Assoc-master/sources/Assoc-master/sources/fcpe.bmp
+Stack Trace:
+#0 /var/www/html/Assoc-master/sources/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2015-06-09 17:16:04 Error: [MissingViewException] View file "/var/www/html/Assoc-master/sources/app/View/Themed/Cakestrap/Fournitures/editer_produit.ctp" is missing.
+Exception Attributes: array (
+  'file' => '/var/www/html/Assoc-master/sources/app/View/Themed/Cakestrap/Fournitures/editer_produit.ctp',
+)
+Request URL: /Assoc-master/sources/fournitures/editerProduit
+Stack Trace:
+#0 /var/www/html/Assoc-master/sources/lib/Cake/View/View.php(463): View->_getViewFileName(NULL)
+#1 /var/www/html/Assoc-master/sources/lib/Cake/Controller/Controller.php(954): View->render(NULL, NULL)
+#2 /var/www/html/Assoc-master/sources/lib/Cake/Routing/Dispatcher.php(192): Controller->render()
+#3 /var/www/html/Assoc-master/sources/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(FournituresController), Object(CakeRequest), Object(CakeResponse))
+#4 /var/www/html/Assoc-master/sources/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2015-06-09 17:16:23 Error: Fatal Error (1): Call to undefined method View::Form() in [/var/www/html/Assoc-master/sources/app/View/Fournitures/editer_produit.ctp, line 4]
+2015-06-09 17:16:23 Error: [FatalErrorException] Call to undefined method View::Form()
+Request URL: /Assoc-master/sources/fournitures/editerProduit
+Stack Trace:
+#0 /var/www/html/Assoc-master/sources/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Call to undefin...', '/var/www/html/A...', 4)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to undefin...', '/var/www/html/A...', 4, Array)
+#2 /var/www/html/Assoc-master/sources/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Call to undefin...', '/var/www/html/A...', 4, Array)
+#3 /var/www/html/Assoc-master/sources/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2015-06-10 11:06:08 Error: [MissingControllerException] Controller class Assoc-masterController could not be found.
+Exception Attributes: array (
+  'class' => 'Assoc-masterController',
+  'plugin' => NULL,
+)
+Request URL: /Assoc-master/sources/Assoc-master/sources/fcpe.bmp
+Stack Trace:
+#0 /var/www/html/Assoc-master/sources/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2015-06-10 11:06:08 Error: [MissingControllerException] Controller class Assoc-masterController could not be found.
+Exception Attributes: array (
+  'class' => 'Assoc-masterController',
+  'plugin' => NULL,
+)
+Request URL: /Assoc-master/sources/Assoc-master/sources/fcpe.bmp
+Stack Trace:
+#0 /var/www/html/Assoc-master/sources/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2015-06-10 11:06:22 Error: [PDOException] SQLSTATE[42S22]: Column not found: 1054 Unknown column 'TypeDeProduitNom' in 'field list'
+Request URL: /Assoc-master/sources/fournitures/listeProduits
+Stack Trace:
+#0 /var/www/html/Assoc-master/sources/lib/Cake/Model/Datasource/DboSource.php(458): PDOStatement->execute(Array)
+#1 /var/www/html/Assoc-master/sources/lib/Cake/Model/Datasource/DboSource.php(424): DboSource->_execute('SELECT Designat...', Array)
+#2 /var/www/html/Assoc-master/sources/lib/Cake/Model/Datasource/DboSource.php(665): DboSource->execute('SELECT Designat...', Array, Array)
+#3 /var/www/html/Assoc-master/sources/lib/Cake/Model/Datasource/DboSource.php(537): DboSource->fetchAll('SELECT Designat...')
+#4 [internal function]: DboSource->query('SELECT Designat...')
+#5 /var/www/html/Assoc-master/sources/lib/Cake/Model/Model.php(3307): call_user_func_array(Array, Array)
+#6 /var/www/html/Assoc-master/sources/app/Controller/FournituresController.php(621): Model->query('SELECT Designat...')
+#7 [internal function]: FournituresController->listeProduits()
+#8 /var/www/html/Assoc-master/sources/lib/Cake/Controller/Controller.php(490): ReflectionMethod->invokeArgs(Object(FournituresController), Array)
+#9 /var/www/html/Assoc-master/sources/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#10 /var/www/html/Assoc-master/sources/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(FournituresController), Object(CakeRequest), Object(CakeResponse))
+#11 /var/www/html/Assoc-master/sources/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#12 {main}
+2015-06-10 11:16:25 Error: [PDOException] SQLSTATE[42S22]: Column not found: 1054 Unknown column 'bal_vue_e300_produit.TypeDeProduitNom' in 'field list'
+Request URL: /Assoc-master/sources/fournitures/listeProduits
+Stack Trace:
+#0 /var/www/html/Assoc-master/sources/lib/Cake/Model/Datasource/DboSource.php(458): PDOStatement->execute(Array)
+#1 /var/www/html/Assoc-master/sources/lib/Cake/Model/Datasource/DboSource.php(424): DboSource->_execute('SELECT bal_vue_...', Array)
+#2 /var/www/html/Assoc-master/sources/lib/Cake/Model/Datasource/DboSource.php(665): DboSource->execute('SELECT bal_vue_...', Array, Array)
+#3 /var/www/html/Assoc-master/sources/lib/Cake/Model/Datasource/DboSource.php(537): DboSource->fetchAll('SELECT bal_vue_...')
+#4 [internal function]: DboSource->query('SELECT bal_vue_...')
+#5 /var/www/html/Assoc-master/sources/lib/Cake/Model/Model.php(3307): call_user_func_array(Array, Array)
+#6 /var/www/html/Assoc-master/sources/app/Controller/FournituresController.php(632): Model->query('SELECT bal_vue_...')
+#7 [internal function]: FournituresController->listeProduits()
+#8 /var/www/html/Assoc-master/sources/lib/Cake/Controller/Controller.php(490): ReflectionMethod->invokeArgs(Object(FournituresController), Array)
+#9 /var/www/html/Assoc-master/sources/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#10 /var/www/html/Assoc-master/sources/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(FournituresController), Object(CakeRequest), Object(CakeResponse))
+#11 /var/www/html/Assoc-master/sources/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#12 {main}
+2015-06-10 11:36:23 Error: Fatal Error (4): syntax error, unexpected 'else' (T_ELSE) in [/var/www/html/Assoc-master/sources/app/Controller/FournituresController.php, line 723]
+2015-06-10 11:36:23 Error: [FatalErrorException] syntax error, unexpected 'else' (T_ELSE)
+Request URL: /Assoc-master/sources/fournitures/choisirOptions
+Stack Trace:
+#0 /var/www/html/Assoc-master/sources/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/html/A...', 723)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/html/A...', 723, Array)
+#2 /var/www/html/Assoc-master/sources/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/html/A...', 723, Array)
+#3 /var/www/html/Assoc-master/sources/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2015-06-10 11:54:10 Error: Fatal Error (4): syntax error, unexpected '$queryProductsOptions' (T_VARIABLE) in [/var/www/html/Assoc-master/sources/app/Controller/FournituresController.php, line 694]
+2015-06-10 11:54:10 Error: [FatalErrorException] syntax error, unexpected '$queryProductsOptions' (T_VARIABLE)
+Request URL: /Assoc-master/sources/fournitures/listeProduits
+Stack Trace:
+#0 /var/www/html/Assoc-master/sources/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/html/A...', 694)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/html/A...', 694, Array)
+#2 /var/www/html/Assoc-master/sources/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/html/A...', 694, Array)
+#3 /var/www/html/Assoc-master/sources/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
